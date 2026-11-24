@@ -1,0 +1,15 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	// Must match the Worker name in the Cloudflare dashboard, otherwise Workers Builds fails.
+	"name": "landingpage-saschadahlmann",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-11-19",
+	"rules": [{ "type": "Data", "globs": ["**/*.woff2"], "fallthrough": true }],
+	// Every domain listed here is served by this Worker (www.* redirects to the apex domain).
+	// custom_domain requires a hostname without A/AAAA/CNAME record; hostnames with an existing proxied record use a route.
+	"routes": [
+		// The proxied CNAME left over from the former Pages project must stay, the route depends on it.
+		{ "pattern": "saschadahlmann.de/*", "zone_name": "saschadahlmann.de" },
+		{ "pattern": "www.saschadahlmann.de", "custom_domain": true }
+	]
+}
